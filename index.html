@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Modèles de Collecte de Données</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f7f8fa;}
+    header { background: #2a3f54; color: #fff; padding: 1em 2em;}
+    header nav { margin-top: 0.5em; }
+    header nav a { color: #fff; margin-right: 1em; text-decoration: none; font-weight: bold;}
+    header nav a.active { text-decoration: underline;}
+    main { padding: 2em;}
+    section { margin-bottom: 2em; background: #fff; padding: 1em 2em; border-radius: 8px; }
+    h2, h3 { color: #2a3f54;}
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1em;}
+    th, td { border: 1px solid #cfd8dc; padding: 0.5em; vertical-align: top;}
+    th { background: #ececec;}
+    button { background: #2a3f54; color: #fff; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;}
+    button:hover { background: #1a2734;}
+    input, select, textarea { width: 98%; padding: 0.5em; border: 1px solid #cfd8dc; border-radius: 4px; font-size:1em;}
+    textarea { resize: vertical; min-height: 55px; }
+    fieldset { border: 1px solid #cfd8dc; border-radius: 5px; padding: 1em; margin: 1em 0;}
+    legend { font-weight: bold; }
+    .hidden { display: none;}
+    .row-btns {margin:0.5em 0;}
+    .guide-dyn {margin-bottom:2em;}
+    .guide-q {margin: 0.5em 0;}
+    .resume-attractif {
+      background: #e8f4fa;
+      border-left: 6px solid #2a3f54;
+      border-radius: 11px;
+      padding: 1.5em 1em;
+      margin-bottom: 2em;
+      box-shadow: 0 2px 10px #0001;
+      font-size:1.08em;
+    }
+    .resume-attractif ul { margin-top: 0.7em; }
+    .resume-attractif li { margin-bottom: 0.5em; }
+    .resume-highlight { color: #0d6482; font-weight: bold;}
+    .action-flex { display: flex; flex-wrap: wrap; gap: 1.5em; margin-bottom: 1.5em;}
+    .card-action {
+      background:#f6fafd; border-radius:10px; box-shadow:0 1px 6px #0001;
+      padding:1em 1.5em; flex:1 1 270px; min-width:220px;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .card-action button { margin-top: 1em;}
+    .alert { color: #b71c1c; font-weight: bold; }
+    .input-autre { display:none; margin-top:5px; font-size:0.95em; }
+    .mesures-delete-btn { background: #c62828; color: #fff; border: none; border-radius: 3px; cursor: pointer; padding: 0.3em 0.8em; font-size: 0.95em;}
+    @media (max-width: 800px) {
+      main { padding: 0.5em;}
+      section { padding: 0.5em;}
+      table, th, td, input, select, textarea { font-size: 0.95em; }
+      .action-flex { flex-direction:column; gap:1em;}
+      .card-action { min-width:unset; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Modèles de Collecte de Données</h1>
+    <nav>
+      <a href="#" data-page="accueil" class="active">Accueil</a>
+      <a href="#" data-page="inventaire">Inventaire</a>
+      <a href="#" data-page="grilles">Grilles</a>
+      <a href="#" data-page="matrices">Matrices</a>
+      <a href="#" data-page="observation">Observation</a>
+      <a href="#" data-page="entretien">Entretiens</a>
+      <a href="#" data-page="mesures">Mesures</a>
+    </nav>
+  </header>
+  <main>
+    <!-- ACCUEIL avec résumé attractif + actions -->
+    <section id="accueil">
+      <div class="resume-attractif">
+        <span class="resume-highlight">Synthèse méthodologique&nbsp;:</span>
+        <ul>
+          <li><b>Inventaire complet</b> : personnel, technologies, processus, indicateurs clés.</li>
+          <li><b>Collecte multi-source</b> : entretiens ciblés, observation terrain, analyse documentaire.</li>
+          <li><b>Validation croisée</b> : chaque information est vérifiée par plusieurs preuves (déclaratif, observation, document, confirmation).</li>
+          <li><b>Grilles et matrices</b> : critères scorés, preuves associées, suivi de la complétude et alertes sur incohérences.</li>
+          <li><b>Métriques opérationnelles</b> : MTTR, MTTD, taux de faux positifs, ratios de productivité et de qualité.</li>
+          <li><b>Gestion transparente</b> : processus d’escalade et d’arbitrage, harmonisation des pratiques, adaptation au contexte SOC.</li>
+        </ul>
+      </div>
+      <div class="action-flex">
+        <div class="card-action">
+          <b>Commencer l’évaluation</b>
+          <span>Accédez à chaque module pour saisir vos données.</span>
+          <button onclick="goTo('inventaire')">Démarrer</button>
+        </div>
+      </div>
+    </section>
+    <!-- INVENTAIRE -->
+    <section id="inventaire" class="hidden">
+      <h2>Inventaire SOC</h2>
+      <h3>Personnel</h3>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th><th>Rôle</th><th>Ancienneté</th>
+              <th>Certifications</th><th>Charge de travail</th>
+              <th>Compétences</th>
+            </tr>
+          </thead>
+          <tbody id="inv-personnel-body">
+            <tr>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="inv-personnel-body">Ajouter</button></div>
+      </form>
+      <h3>Technologie</h3>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Outil</th><th>Version</th><th>Éditeur</th>
+              <th>Date de mise en production</th>
+              <th>Fonctions couvertes</th>
+              <th>Intégrations</th>
+              <th>Capacités</th>
+            </tr>
+          </thead>
+          <tbody id="inv-tech-body">
+            <tr>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td><input type="date"></td>
+              <td><textarea></textarea></td>
+              <td><textarea></textarea></td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="inv-tech-body">Ajouter</button></div>
+      </form>
+      <h3>Processus</h3>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom de la procédure</th>
+              <th>Version</th>
+              <th>Fréquence de mise à jour</th>
+              <th>Application réelle</th>
+              <th>Traçabilité</th>
+            </tr>
+          </thead>
+          <tbody id="inv-proc-body">
+            <tr>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td>
+                <select>
+                  <option>Oui</option><option>Non</option><option>Partiel</option>
+                </select>
+              </td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="inv-proc-body">Ajouter</button></div>
+      </form>
+      <h3>Indicateurs de performance</h3>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Indicateur</th>
+              <th>Valeur</th>
+              <th>Source de mesure</th>
+              <th>Fréquence de mise à jour</th>
+              <th>Utilisation</th>
+            </tr>
+          </thead>
+          <tbody id="inv-indic-body">
+            <tr>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td><input></td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="inv-indic-body">Ajouter</button></div>
+      </form>
+    </section>
+    <!-- GRILLES -->
+    <section id="grilles" class="hidden">
+      <h2>Grilles d’évaluation</h2>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Domaine</th>
+              <th>Critère</th>
+              <th>Réponse</th>
+              <th>Score</th>
+              <th>Preuve</th>
+              <th>Commentaire</th>
+            </tr>
+          </thead>
+          <tbody id="grilles-body">
+            <tr>
+              <td>
+                <select>
+                  <option>Personnel</option>
+                  <option>Technologie</option>
+                  <option>Processus</option>
+                  <option>Indicateurs de performance</option>
+                </select>
+              </td>
+              <td><textarea></textarea></td>
+              <td>
+                <select>
+                  <option>Oui</option><option>Non</option><option>Partiel</option><option>N/A</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="5"></td>
+              <td><textarea></textarea></td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="grilles-body">Ajouter un critère</button></div>
+      </form>
+    </section>
+    <!-- MATRICES -->
+    <section id="matrices" class="hidden">
+      <h2>Matrice de validation des preuves</h2>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Élément évalué</th>
+              <th>Type de preuve</th>
+              <th>Preuve fournie</th>
+              <th>Validation</th>
+              <th>Sources croisées</th>
+              <th>Commentaire</th>
+            </tr>
+          </thead>
+          <tbody id="matrices-body">
+            <tr>
+              <td><textarea></textarea></td>
+              <td>
+                <select>
+                  <option>Document</option>
+                  <option>Capture écran</option>
+                  <option>Log</option>
+                  <option>Observation</option>
+                  <option>Démo</option>
+                  <option>Autre</option>
+                </select>
+                <input class="input-autre" type="text" placeholder="Précisez..." style="display:none;">
+              </td>
+              <td>
+                <select>
+                  <option>Oui</option><option>Non</option>
+                </select>
+              </td>
+              <td>
+                <select>
+                  <option>✓</option><option>✗</option>
+                </select>
+              </td>
+              <td>
+                <label><input type="checkbox">Déclaré</label>
+                <label><input type="checkbox">Observé</label>
+                <label><input type="checkbox">Documenté</label>
+                <label><input type="checkbox">Confirmé</label>
+              </td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="matrices-body">Ajouter</button></div>
+      </form>
+      <h3>Validation croisée</h3>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Élément</th><th>Déclaré</th><th>Observé</th><th>Documenté</th><th>Confirmé</th><th>Validation finale</th><th>Commentaire</th>
+            </tr>
+          </thead>
+          <tbody id="valide-body">
+            <tr>
+              <td><textarea></textarea></td>
+              <td><select><option>Oui</option><option>Non</option></select></td>
+              <td><select><option>Oui</option><option>Non</option></select></td>
+              <td><select><option>Oui</option><option>Non</option></select></td>
+              <td><select><option>Oui</option><option>Non</option></select></td>
+              <td><select><option>✓</option><option>✗</option></select></td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="valide-body">Ajouter</button></div>
+      </form>
+      <div class="alert" id="cross-val-alert" style="display:none;">Alerte : incohérence détectée, vérifiez vos données !</div>
+    </section>
+    <!-- OBSERVATION -->
+    <section id="observation" class="hidden">
+      <h2>Observation et checklist</h2>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Type de grille</th>
+              <th>Élément observé</th>
+              <th>Présence</th>
+              <th>Validation</th>
+              <th>Commentaire</th>
+            </tr>
+          </thead>
+          <tbody id="obs-body">
+            <tr>
+              <td>
+                <select>
+                  <option>Checklist observation SOC</option>
+                  <option>Évaluation processus</option>
+                  <option>Analyse interactions</option>
+                  <option>Inspection documentaire</option>
+                  <option>Autre</option>
+                </select>
+                <input class="input-autre" type="text" placeholder="Précisez..." style="display:none;">
+              </td>
+              <td><textarea></textarea></td>
+              <td>
+                <select>
+                  <option>Oui</option><option>Non</option><option>Partiel</option>
+                </select>
+              </td>
+              <td>
+                <select>
+                  <option>✓</option><option>✗</option>
+                </select>
+              </td>
+              <td><textarea></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" class="add-row" data-target="obs-body">Ajouter</button></div>
+      </form>
+    </section>
+    <!-- ENTRETIENS -->
+    <section id="entretien" class="hidden">
+      <h2>Guides d’entretien spécialisés</h2>
+      <div class="guide-dyn">
+        <label for="role-entretien">Type d’entretien :</label>
+        <select id="role-entretien">
+          <option value="">Sélectionnez...</option>
+          <option value="ciso">CISO</option>
+          <option value="analyste">Analyste SOC</option>
+          <option value="manager">Manager opérationnel</option>
+          <option value="tech">Équipe technique</option>
+          <option value="autre">Autre</option>
+        </select>
+        <input class="input-autre" id="input-entretien-autre" type="text" placeholder="Précisez..." style="display:none;">
+      </div>
+      <form id="form-entretien-dyn">
+        <div id="entretien-questions"></div>
+        <button type="submit" class="hidden" id="btn-save-entretien">Sauvegarder</button>
+      </form>
+    </section>
+    <!-- MESURES -->
+    <section id="mesures" class="hidden">
+      <h2>Outils de mesure et tableaux de suivi</h2>
+      <form id="form-mesures">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Indicateur</th>
+              <th>Ratio</th>
+              <th>Incident</th>
+              <th>Valeur</th>
+              <th>Période</th>
+              <th>Source</th>
+              <th>Commentaire</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="mesures-body">
+            <tr>
+              <td>
+                <select>
+                  <option>MTTR</option>
+                  <option>MTTD</option>
+                  <option>Taux faux positifs</option>
+                  <option>Volume alertes</option>
+                  <option>Incidents critiques</option>
+                  <option>Tableau incident</option>
+                  <option>Couverture sécurité</option>
+                  <option>Productivité</option>
+                  <option>Qualité</option>
+                  <option>Autre</option>
+                </select>
+                <input class="input-autre" type="text" placeholder="Précisez..." style="display:none;">
+              </td>
+              <td><input placeholder="Indicateur"></td>
+              <td><input placeholder="Ratio"></td>
+              <td><input placeholder="Incident"></td>
+              <td><input placeholder="Valeur"></td>
+              <td><input placeholder="Période"></td>
+              <td><input placeholder="Source"></td>
+              <td><textarea placeholder="Commentaire"></textarea></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-btns"><button type="button" id="ajouter-mesure">Ajouter</button></div>
+      </form>
+    </section>
+  </main>
+  <script>
+    // Navigation
+    document.querySelectorAll('nav a').forEach(link => {
+      link.onclick = function(e){
+        e.preventDefault();
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+        let page = this.getAttribute('data-page');
+        document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+        document.getElementById(page).classList.remove('hidden');
+      };
+    });
+    function goTo(page) {
+      document.querySelectorAll('nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('data-page') === page);
+      });
+      document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(page).classList.remove('hidden');
+    }
+    // Ajout de lignes dynamiques pour modules standards
+    document.querySelectorAll('button.add-row').forEach(btn => {
+      btn.onclick = function() {
+        const tbodyId = this.getAttribute('data-target');
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        const tr = tbody.rows[0].cloneNode(true);
+        Array.from(tr.querySelectorAll('input, select, textarea')).forEach(input => {
+          if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
+          else input.value = '';
+        });
+        tbody.appendChild(tr);
+        // Réactive le onchange pour "Autre"
+        tr.querySelectorAll('select').forEach(function(sel){
+          if ([...sel.options].some(opt=>opt.value==="Autre" || opt.text==="Autre")) {
+            sel.onchange = function() { showOtherInput(this); };
+            showOtherInput(sel);
+          }
+        });
+      };
+    });
+    // MESURES dynamique : Ajout/Suppression de lignes
+    document.getElementById('ajouter-mesure').onclick = function() {
+      const tbody = document.getElementById('mesures-body');
+      const tr = tbody.rows[0].cloneNode(true);
+      Array.from(tr.querySelectorAll('input, select, textarea')).forEach(input => {
+        if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
+        else input.value = '';
+      });
+      // Ajoute le bouton supprimer
+      let tdAction = tr.querySelector('td:last-child');
+      if(!tdAction) {
+        tdAction = document.createElement('td');
+        tr.appendChild(tdAction);
+      }
+      tdAction.innerHTML = '<button type="button" class="mesures-delete-btn" onclick="this.closest(\'tr\').remove()">Supprimer</button>';
+
+      // Réactive onchange pour "Autre"
+      tr.querySelectorAll('select').forEach(function(sel){
+        if ([...sel.options].some(opt=>opt.value==="Autre" || opt.text==="Autre")) {
+          sel.onchange = function() { showOtherInput(this); };
+          showOtherInput(sel);
+        }
+      });
+      tbody.appendChild(tr);
+    };
+    // Affiche un champ texte si "Autre" est sélectionné dans un select
+    function showOtherInput(select) {
+      var val = select.value;
+      var input = select.parentNode.querySelector('.input-autre');
+      if(input) {
+        if(val === "Autre") {
+          input.style.display = '';
+          input.required = true;
+        } else {
+          input.style.display = 'none';
+          input.required = false;
+          input.value = '';
+        }
+      }
+    }
+    // Initialisation au chargement pour tous les selects "Autre"
+    document.querySelectorAll('select').forEach(function(sel){
+      if ([...sel.options].some(opt=>opt.value==="Autre" || opt.text==="Autre")) {
+        sel.onchange = function() { showOtherInput(this); };
+        showOtherInput(sel);
+      }
+    });
+    // Pour le cas du type d'entretien avec "Autre"
+    const questionsEntretien = {
+      ciso: [
+        {q:"Nom", type:"input"},
+        {q:"Rôle", type:"input"},
+        {q:"Objectifs de sécurité globaux", type:"textarea"},
+        {q:"Gouvernance du SOC", type:"textarea"},
+        {q:"Intégration avec les autres fonctions", type:"textarea"},
+        {q:"Challenges de maturité", type:"textarea"},
+        {q:"Stratégie d’évolution du SOC", type:"textarea"}
+      ],
+      analyste: [
+        {q:"Nom", type:"input"},
+        {q:"Rôle", type:"input"},
+        {q:"Ancienneté SOC", type:"input"},
+        {q:"Certifications", type:"input"},
+        {q:"Décrivez votre journée type de travail", type:"textarea"},
+        {q:"Quels outils utilisez-vous principalement ?", type:"textarea"},
+        {q:"Comment recevez-vous et traitez-vous les alertes ?", type:"textarea"},
+        {q:"Quelle est votre procédure d’escalade ?", type:"textarea"},
+        {q:"Comment documentez-vous vos analyses ?", type:"textarea"},
+        {q:"Comment corrélez-vous les événements ?", type:"textarea"},
+        {q:"Quelles sont vos sources de threat intelligence ?", type:"textarea"},
+        {q:"Comment menez-vous vos investigations ?", type:"textarea"},
+        {q:"Combien d'alertes traitez-vous par jour ?", type:"input"},
+        {q:"Quel est votre temps moyen de traitement ?", type:"input"},
+        {q:"Quels sont vos principaux défis ?", type:"textarea"},
+        {q:"Comment mesurez-vous votre efficacité ?", type:"textarea"}
+      ],
+      manager: [
+        {q:"Nom", type:"input"},
+        {q:"Rôle", type:"input"},
+        {q:"Quelles sont les procédures de supervision ?", type:"textarea"},
+        {q:"Comment suivez-vous la performance des analystes ?", type:"textarea"},
+        {q:"Comment sont gérés les plannings et charges ?", type:"textarea"},
+        {q:"Quels sont vos KPIs principaux ?", type:"textarea"}
+      ],
+      tech: [
+        {q:"Nom", type:"input"},
+        {q:"Rôle", type:"input"},
+        {q:"Quelles intégrations avez-vous avec le SIEM ?", type:"textarea"},
+        {q:"Comment sont gérées les sources de logs ?", type:"textarea"},
+        {q:"Quels sont les formats d’export / API ?", type:"textarea"},
+        {q:"Quelle est la fréquence des mises à jour ?", type:"textarea"}
+      ]
+    };
+    document.getElementById('role-entretien').onchange = function() {
+      const role = this.value;
+      const cont = document.getElementById('entretien-questions');
+      const autreInput = document.getElementById('input-entretien-autre');
+      cont.innerHTML = '';
+      if (role === "autre") {
+        autreInput.style.display = '';
+        document.getElementById('btn-save-entretien').classList.remove('hidden');
+        return;
+      } else {
+        autreInput.style.display = 'none';
+      }
+      if (!role || !questionsEntretien[role]) {
+        document.getElementById('btn-save-entretien').classList.add('hidden');
+        return;
+      }
+      questionsEntretien[role].forEach((q,i)=>{
+        const div = document.createElement('div');
+        div.className = "guide-q";
+        div.innerHTML = `<label>${q.q}:</label><br>${q.type=="textarea"?
+          `<textarea name="q_${i}"></textarea>`:`<input name="q_${i}">`}`;
+        cont.appendChild(div);
+      });
+      document.getElementById('btn-save-entretien').classList.remove('hidden');
+    };
+    document.getElementById('form-entretien-dyn').onsubmit = function(e){
+      e.preventDefault();
+      alert("Réponses enregistrées localement (cf. console pour voir les valeurs, ou adapter pour sauvegarder).");
+      return false;
+    };
+    function checkCrossValidation() {
+      let incoh = false;
+      document.querySelectorAll('#valide-body tr').forEach(tr => {
+        const sel = tr.querySelectorAll('select');
+        if (sel.length>=5) {
+          if ((sel[0].value==="Non"||sel[1].value==="Non"||sel[2].value==="Non"||sel[3].value==="Non") && sel[4].value==="✓") {
+            incoh = true;
+          }
+        }
+      });
+      document.getElementById('cross-val-alert').style.display = incoh ? '' : 'none';
+    }
+    document.getElementById('valide-body').addEventListener('change', checkCrossValidation);
+    // Démarrage sur Accueil
+    document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+    document.getElementById('accueil').classList.remove('hidden');
+  </script>
+</body>
+</html>
